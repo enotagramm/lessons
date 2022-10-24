@@ -48,7 +48,7 @@ print(array)
 class TestMerge(unittest.TestCase):
     test_array = [33, 42, 9, 37, 8, 47, 5, 29, 49, 31, 4, 48, 16, 22, 26]
 
-    def test_sorded(self):
+    def test_sorted(self):
         sort_default = sorted(self.test_array)
         self.assertEqual(sort_default, array)
 
