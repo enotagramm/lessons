@@ -29,11 +29,39 @@ with con:
         Course.drop_table()
         StudentCourse.drop_table()
 
-        con.create_tables([Student, Course, StudentCourse])
+    con.create_tables([Student, Course, StudentCourse])
 
-        Student.insert_many(students).execute()
-        Course.insert_many(courses).execute()
-        StudentCourse.insert_many(student_courses).execute()
+    Student.insert_many(students).execute()
+    Course.insert_many(courses).execute()
+    StudentCourse.insert_many(student_courses).execute()
+
+
+def add_student(name, surname, age, city):
+    Student.insert(name=name,
+                   surname=surname,
+                   age=age,
+                   city=city,
+                   ).execute()
+    return True
+
+
+def add_course(name, time_start, time_end):
+    Course.insert(name=name,
+                  time_start=time_start,
+                  time_end=time_end,
+                  ).execute()
+    return True
+
+
+def add_student_course(student_id, course_id):
+    StudentCourse.insert(student_id=student_id, course_id=course_id).execute()
+    return True
+
+
+def del_student(student_id):
+    StudentCourse.delete().where(StudentCourse.student_id == student_id).execute()
+    Student.delete().where(Student.id == student_id).execute()
+    return True
 
     # old_students = Student.select().where(Student.age > 30)
     # print("Старше 30-ти лет:")
@@ -64,19 +92,17 @@ with con:
 
 class TestORM(unittest.TestCase):
     def test_add_student(self):
-        pass
+        self.assertTrue(add_student('Rick', 'Sanchez', 59, 'Spb'))
 
-    def test_add_courses(self):
-        pass
+    def test_add_course(self):
+        self.assertTrue(add_course('Golang', '2020-07-13', '2022-07-13'))
 
     def test_del_student(self):
-        pass
+        self.assertTrue(del_student(2))
 
     def test_add_student_courses(self):
-        pass
+        self.assertTrue(add_student_course(5, 1))
 
-    def test_del_student_courses(self):
-        pass
 
 
 
